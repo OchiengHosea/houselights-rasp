@@ -25,12 +25,15 @@ for l in lights:
 
 def process_message(msg):
     data = json.loads(msg.payload.decode('UTF-8'))
+    print(data)
     try:
         action = data.get('action', None)
         light = data.get('light', None)
         if light in lights and action in actions:
             GPIO.output(lights[light], actions[action])
             statuses[light]=action
+        print(f"Light {light} has been turned {action}")
+        
     except e:
         print("Error performing action due to ", e.message)
 
