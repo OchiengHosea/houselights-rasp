@@ -15,9 +15,14 @@ actions = dict(
     OFF=False
 )
 
+statuses = dict{
+    L1='OFF',
+    B1='OFF'
+}
+
 for l in lights:
     GPIO.setup(lights[l], GPIO.OUT)
-    
+
 def process_message(msg):
     data = json.loads(msg)
     try:
@@ -25,6 +30,7 @@ def process_message(msg):
         light = data.get('light', None)
         if light in lights and action in actions:
             GPIO.output(lights[light], actions[action])
+            statuses[light]=action
     except e:
         print("Error performing action due to ", e.message)
 
@@ -46,3 +52,7 @@ client.tls_set(tls_version=mqtt.ssl.PROTOCOL_TLS)
 client.username_pw_set("duke__", "dukeHiveMQ8")
 client.connect("3221fc9b1a7e4e76ad7cce10b8489e96.s1.eu.hivemq.cloud", 8883, 60)
 client.loop_start()
+
+while True:
+    print(statuses)
+    time.sleep(10)
