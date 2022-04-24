@@ -15,10 +15,10 @@ actions = dict(
     OFF=False
 )
 
-statuses = dict{
+statuses = dict(
     L1='OFF',
     B1='OFF'
-}
+)
 
 for l in lights:
     GPIO.setup(lights[l], GPIO.OUT)
