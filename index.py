@@ -24,7 +24,7 @@ for l in lights:
     GPIO.setup(lights[l], GPIO.OUT)
 
 def process_message(msg):
-    data = json.loads(msg)
+    data = json.loads(str(msg.payload))
     try:
         action = data.get('action', None)
         light = data.get('light', None)
